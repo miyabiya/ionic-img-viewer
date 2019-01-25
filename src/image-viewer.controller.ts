@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { App, Config, DeepLinker, ElementRef } from 'ionic-angular';
+import { App, Config, DeepLinker } from 'ionic-angular';
 
 import { ImageViewerOptions, ImageViewer } from './image-viewer';
 import { ImageViewerComponent } from './image-viewer.component';
@@ -40,8 +40,8 @@ export class ImageViewerController {
       if(opts.hasOwnProperty('isSlides') && opts['isSlides'] == true){
         console.log('passed in some slides!');
         console.log(imageElement);
-      }else if(imageElement.hasOwnProperty('src')){
-        image = imageElement.src;
+      }else if(imageElement && imageElement.hasOwnProperty('src')){
+        image = imageElement['src'];
       }
     }
     let options:any = {};

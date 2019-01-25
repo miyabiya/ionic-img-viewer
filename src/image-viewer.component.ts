@@ -74,7 +74,7 @@ export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, Afte
 	@ViewChild('imageContainer') imageContainer;
 	@ViewChild('image') image;
 
-	private mediaSlides: <any|ElementRef>;
+	private mediaSlides: any;
 	private pinchGesture: ImageViewerZoomGesture;
 
 	public isZoomed: boolean;
