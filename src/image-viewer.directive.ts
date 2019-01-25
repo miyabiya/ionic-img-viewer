@@ -22,8 +22,12 @@ export class ImageViewerDirective {
 
 		const element = this._el.nativeElement;
 		const onCloseCallback = () => this.close.emit();
+		let isSlides:boolean = false;
+		if(element && imageElement.hasOwnProperty('length')){
+			isSlides = true;
+		}
 
-		const imageViewer = this.imageViewerCtrl.create(element, { fullResImage: this.src, onCloseCallback });
+		const imageViewer = this.imageViewerCtrl.create(element, { fullResImage: this.src, onCloseCallback, isSlides: isSlides });
 		imageViewer.present();
 	}
 }

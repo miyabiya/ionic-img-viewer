@@ -1,4 +1,5 @@
 import { DeepLinker, App, Config } from 'ionic-angular';
+import { ElementRef } from '@angular/core';
 import { Overlay } from 'ionic-angular/navigation/overlay';
 import { OverlayProxy } from 'ionic-angular/navigation/overlay-proxy';
 
@@ -22,4 +23,6 @@ export interface ImageViewerOptions {
 	fullResImage?: string
 	position?: ClientRect;
 	onCloseCallback?: Function;
+	isSlides?: boolean;
+	el?: ElementRef
 }

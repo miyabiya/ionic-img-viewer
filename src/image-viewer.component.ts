@@ -9,7 +9,8 @@ import {
 	GestureController,
 	Config,
 	Platform,
-    Animation
+  Animation,
+	Slides
 } from 'ionic-angular';
 import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from 'ionic-angular/gestures/hammer';
 import {
@@ -45,18 +46,35 @@ import { ImageViewerEnter, ImageViewerLeave } from './image-viewer-transitions';
 				<img [src]="imageUrl" tappable #image />
 			</div>
 		</div>
+
+		<ion-header no-border>
+		  <ion-navbar>
+		  </ion-navbar>
+		</ion-header>
+
+	<ion-backdrop (click)="bdClick()"></ion-backdrop>
+
+	<div class="image-wrapper">
+	  <div class="image" #imageContainer>
+	    <div #slideHolder>
+			</div>
+	  </div>
+	</div>
+
 	`,
 	styles: [],
 	encapsulation: ViewEncapsulation.None
 })
 export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, AfterViewInit {
 	public imageUrl: SafeUrl;
+	//@ViewChild('gallery') slides: Slides;
 
 	public dragGesture: ImageViewerTransitionGesture;
 
 	@ViewChild('imageContainer') imageContainer;
 	@ViewChild('image') image;
 
+	private mediaSlides: <any|ElementRef>;
 	private pinchGesture: ImageViewerZoomGesture;
 
 	public isZoomed: boolean;
@@ -78,13 +96,23 @@ export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, Afte
 		super(_config, elementRef, renderer);
 
 		const url = _navParams.get('image');
-		this.updateImageSrc(url);
+		this.mediaSlides = _navParams.get('el');
+		if(this.mediaSlides){
+			//const child = document.createElement('div');
+			let ref = this.elementRef.nativeElement.querySelector('#slideHolder');
+	    this.renderer.appendChild(ref, this.mediaSlides);
+			console.log('appended element!');
+		}else{
+			this.updateImageSrc(url);
+		}
 	}
 
 	updateImageSrc(src) {
 		this.imageUrl = this._sanitizer.bypassSecurityTrustUrl(src);
 	}
-
+	slideChanged(){
+		console.log('slideChanged()');
+	}
 	updateImageSrcWithTransition(src) {
 		const imageElement = this.image.nativeElement;
 		const lowResImgWidth = imageElement.clientWidth;
